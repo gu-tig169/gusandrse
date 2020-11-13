@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Todo Ui',
+      title: 'reminder_app',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.dark,
