@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         underline: Container(
           decoration: const BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.redAccent),
+              bottom: BorderSide(color: Colors.red),
             ),
           ),
         ),
