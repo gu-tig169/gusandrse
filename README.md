@@ -1,6 +1,6 @@
 # reminder_app
 
-Status: Uppdaterad för steg 1
+Status: Uppdaterad för steg 2, förutom en fungerande Checkbox + PopupMenu.
 
 Utvecklare: Andreas Åsén
 
