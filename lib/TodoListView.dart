@@ -6,14 +6,7 @@ import 'package:reminder_app/TodoList.dart';
 import 'NewTodoView.dart';
 import 'model.dart';
 
-class TodoListView extends StatefulWidget {
-  @override
-  _TodoListViewState createState() => _TodoListViewState();
-}
-
-class _TodoListViewState extends State<TodoListView> {
-  String _value;
-
+class TodoListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -46,9 +39,7 @@ class _TodoListViewState extends State<TodoListView> {
                     .headline5
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              _popup(
-                context,
-              )
+              _popup(context)
             ],
           ),
         ),
@@ -57,8 +48,8 @@ class _TodoListViewState extends State<TodoListView> {
   }
 
   Widget _popup(BuildContext context) {
-    return Center(
-      child: DropdownButton<String>(
+    return Consumer<MyState>(
+      builder: (context, state, child) => DropdownButton<String>(
         items: [
           DropdownMenuItem<String>(
             child: Text('Alla'),
@@ -73,13 +64,12 @@ class _TodoListViewState extends State<TodoListView> {
             value: 'three',
           ),
         ],
-        onChanged: (String value) {
-          setState(() {
-            _value = value;
-          });
+        onChanged: (newValue) {
+          var state = Provider.of<MyState>(context, listen: false);
+          state.setFilterValue(newValue);
+          state.useFilter();
         },
-        hint: Text('Alla'),
-        value: _value,
+        hint: Text(hinttext),
         underline: Container(
           decoration: const BoxDecoration(
             border: Border(

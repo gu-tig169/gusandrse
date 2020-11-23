@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'reminder_app',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
