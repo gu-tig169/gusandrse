@@ -6,7 +6,14 @@ import 'package:reminder_app/TodoList.dart';
 import 'NewTodoView.dart';
 import 'model.dart';
 
-class TodoListView extends StatelessWidget {
+class TodoListView extends StatefulWidget {
+  @override
+  _TodoListViewState createState() => _TodoListViewState();
+}
+
+class _TodoListViewState extends State<TodoListView> {
+  String _value;
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -39,9 +46,9 @@ class TodoListView extends StatelessWidget {
                     .headline5
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              /*_popup(
+              _popup(
                 context,
-              )*/
+              )
             ],
           ),
         ),
@@ -49,7 +56,7 @@ class TodoListView extends StatelessWidget {
     );
   }
 
-  /*Widget _popup(BuildContext context) {
+  Widget _popup(BuildContext context) {
     return Center(
       child: DropdownButton<String>(
         items: [
@@ -86,7 +93,7 @@ class TodoListView extends StatelessWidget {
         ),
       ),
     );
-  }*/
+  }
 
   Widget _firstheader(BuildContext context) {
     return Column(

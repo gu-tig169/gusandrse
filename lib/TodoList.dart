@@ -3,15 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reminder_app/model.dart';
 
-class TodoList extends StatelessWidget {
+class TodoList extends StatefulWidget {
   final List<TodoCard> list;
 
   TodoList(this.list);
 
+  @override
+  _TodoListState createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  bool _isChecked = false;
+
   Widget build(BuildContext context) {
     return ListView(
         shrinkWrap: true,
-        children: list.map((card) => _cardItem(context, card)).toList());
+        children: widget.list.map((card) => _cardItem(context, card)).toList());
   }
 
   Widget _cardItem(context, card) {
@@ -39,8 +46,18 @@ class TodoList extends StatelessWidget {
                               children: <Widget>[
                                 Container(
                                   width: 30,
-                                  child:
-                                      Checkbox(value: false, onChanged: null),
+                                  child: Checkbox(
+                                    value: _isChecked,
+                                    activeColor: Colors.white30,
+                                    checkColor: Colors.white,
+                                    onChanged: (newCheckValue) {
+                                      setState(
+                                        () {
+                                          _isChecked = newCheckValue;
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
