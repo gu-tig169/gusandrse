@@ -13,8 +13,6 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  bool _isChecked = false;
-
   Widget build(BuildContext context) {
     return ListView(
         shrinkWrap: true,
@@ -47,15 +45,13 @@ class _TodoListState extends State<TodoList> {
                                 Container(
                                   width: 30,
                                   child: Checkbox(
-                                    value: _isChecked,
+                                    value: card.check,
                                     activeColor: Colors.white30,
                                     checkColor: Colors.white,
-                                    onChanged: (newCheckValue) {
-                                      setState(
-                                        () {
-                                          _isChecked = newCheckValue;
-                                        },
-                                      );
+                                    onChanged: (bool newValue) {
+                                      var state = Provider.of<MyState>(context,
+                                          listen: false);
+                                      state.setTake(card, newValue);
                                     },
                                   ),
                                 ),
