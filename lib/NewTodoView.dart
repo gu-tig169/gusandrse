@@ -82,6 +82,7 @@ class NewTodoViewState extends State<NewTodoView> {
                           children: <Widget>[
                             Expanded(
                               child: TextField(
+                                autofocus: true,
                                 controller: textEditingController,
                                 decoration: InputDecoration(
                                   enabledBorder: InputBorder.none,
