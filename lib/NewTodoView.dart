@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:reminder_app/model.dart';
 
 class NewTodoView extends StatefulWidget {
-  final TodoCard card;
+  final Todo todo;
 
-  NewTodoView(this.card);
+  NewTodoView(this.todo);
 
   @override
   State<StatefulWidget> createState() {
-    return NewTodoViewState(card);
+    return NewTodoViewState(todo);
   }
 }
 
@@ -17,10 +17,10 @@ class NewTodoViewState extends State<NewTodoView> {
 
   TextEditingController textEditingController;
 
-  NewTodoViewState(TodoCard card) {
-    this.message = card.message;
+  NewTodoViewState(Todo todo) {
+    this.message = todo.message;
 
-    textEditingController = TextEditingController(text: card.message);
+    textEditingController = TextEditingController(text: todo.message);
 
     textEditingController.addListener(() {
       setState(() {
@@ -99,7 +99,7 @@ class NewTodoViewState extends State<NewTodoView> {
                                 onPressed: () {
                                   Navigator.pop(
                                     context,
-                                    TodoCard(
+                                    Todo(
                                       message: message,
                                     ),
                                   );

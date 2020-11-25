@@ -16,7 +16,8 @@ class TodoListView extends StatelessWidget {
             _topheader(context),
             _firstheader(context),
             Consumer<MyState>(
-              builder: (context, state, child) => TodoList(state.list),
+              builder: (context, state, child) =>
+                  TodoList(state.completeTodoList),
             ),
           ],
         ),
@@ -67,7 +68,7 @@ class TodoListView extends StatelessWidget {
         onChanged: (newValue) {
           var state = Provider.of<MyState>(context, listen: false);
           state.setFilterValue(newValue);
-          state.useFilter();
+          state.useFilterFunction();
         },
         hint: Text(hinttext),
         underline: Container(
@@ -132,7 +133,7 @@ class TodoListView extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => NewTodoView(
-                                      TodoCard(message: ''),
+                                      Todo(message: ''),
                                     ),
                                   ),
                                 );

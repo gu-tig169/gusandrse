@@ -3,27 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reminder_app/model.dart';
 
-class TodoList extends StatefulWidget {
-  final List<TodoCard> list;
+class TodoList extends StatelessWidget {
+  final List<Todo> completeTodoList;
 
-  TodoList(this.list);
+  TodoList(this.completeTodoList);
 
-  @override
-  _TodoListState createState() => _TodoListState();
-}
-
-class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return ListView(
         shrinkWrap: true,
-        children: widget.list.map((card) => _cardItem(context, card)).toList());
+        children:
+            completeTodoList.map((todo) => _todoCard(context, todo)).toList());
   }
 
-  Widget _cardItem(context, card) {
-    return _todocard(context, card);
-  }
-
-  Widget _todocard(BuildContext context, card) {
+  Widget _todoCard(BuildContext context, todo) {
     return Column(
       children: <Widget>[
         Padding(
@@ -45,20 +37,20 @@ class _TodoListState extends State<TodoList> {
                                 Container(
                                   width: 30,
                                   child: Checkbox(
-                                    value: card.check,
+                                    value: todo.check,
                                     activeColor: Colors.white30,
                                     checkColor: Colors.white,
                                     onChanged: (bool newValue) {
                                       var state = Provider.of<MyState>(context,
                                           listen: false);
-                                      state.setTake(card, newValue);
+                                      state.setCheckbox(todo, newValue);
                                     },
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Text(
-                                    card.message,
+                                    todo.message,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white54),
@@ -73,7 +65,7 @@ class _TodoListState extends State<TodoList> {
                                 onPressed: () {
                                   var state = Provider.of<MyState>(context,
                                       listen: false);
-                                  state.removeCard(card);
+                                  state.removeCard(todo);
                                 },
                               ),
                             ),
