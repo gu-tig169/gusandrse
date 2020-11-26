@@ -139,7 +139,7 @@ class TodoListView extends StatelessWidget {
                                 );
                                 if (newCard != null) {
                                   Provider.of<MyState>(context, listen: false)
-                                      .addCard(newCard);
+                                      .addTodo(newCard);
                                 }
                               },
                             ),

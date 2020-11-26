@@ -65,7 +65,7 @@ class TodoList extends StatelessWidget {
                                 onPressed: () {
                                   var state = Provider.of<MyState>(context,
                                       listen: false);
-                                  state.removeCard(todo);
+                                  state.removeTodo(todo);
                                 },
                               ),
                             ),

@@ -1,21 +1,46 @@
 import 'package:flutter/foundation.dart';
 
+import 'api.dart';
+
 String hinttext = 'Alla';
 
 class Todo {
   String message;
   bool check;
+  String id;
 
-  Todo({this.message, this.check = false});
+  Todo({this.message, this.check = false, this.id});
+
+  static Map<String, dynamic> toJson(Todo todo) {
+    return {
+      'title': todo.message,
+      'done': todo.check,
+    };
+  }
+
+  static Todo fromJson(Map<String, dynamic> json) {
+    return Todo(
+      message: json['title'],
+      check: json['done'],
+      id: json['id'],
+    );
+  }
 }
 
 class MyState extends ChangeNotifier {
+  Future getList() async {
+    List<Todo> apiList = await Api.getTodos();
+    _completeTodoList = apiList;
+    notifyListeners();
+  }
+
   String _filterValue = 'one';
 
-  List<Todo> _completeTodoList = new List();
+  List<Todo> _completeTodoList = [];
+
   List<Todo> _filteredList;
 
-  List get completeTodoList => filtering(_completeTodoList, _filterValue);
+  List<Todo> get completeTodoList => filtering(_completeTodoList, _filterValue);
 
   List<Todo> filtering(List<Todo> _completeTodoList, String _filterValue) {
     if (_filterValue == 'one') {
@@ -44,19 +69,19 @@ class MyState extends ChangeNotifier {
     _filterValue = newValue;
   }
 
-  void addCard(Todo todo) {
-    _filterValue = 'one';
-    _completeTodoList.add(todo);
-    notifyListeners();
-  }
-
-  void removeCard(Todo todo) {
-    _completeTodoList.remove(todo);
-    notifyListeners();
-  }
-
-  void setCheckbox(Todo todo, bool check) {
+  void setCheckbox(Todo todo, bool check) async {
     todo.check = check;
+    await Api.updateTodo(todo, todo.id);
     notifyListeners();
+  }
+
+  void addTodo(Todo todo) async {
+    await Api.addTodo(todo);
+    await getList();
+  }
+
+  void removeTodo(Todo todo) async {
+    await Api.removeTodo(todo.id);
+    await getList();
   }
 }
