@@ -6,7 +6,8 @@ import 'model.dart';
 import 'package:http/http.dart' as http;
 
 const API_URL = 'https://todoapp-api-vldfm.ondigitalocean.app';
-const API_KEY = '041933a1-b5ca-4e4e-993b-a1ff19cbf5f1';
+const API_KEY =
+    '70593ea6-22bf-46b5-85d3-5cb383295130'; // Sätt ny API nyckel om den inte längre fungerar
 
 class Api {
   static Future addTodo(Todo todo) async {
