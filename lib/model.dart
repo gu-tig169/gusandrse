@@ -1,63 +1,87 @@
 import 'package:flutter/foundation.dart';
 
+import 'api.dart';
+
 String hinttext = 'Alla';
 
-class TodoCard {
+class Todo {
   String message;
   bool check;
+  String id;
 
-  TodoCard({this.message, this.check = false});
+  Todo({this.message, this.check = false, this.id});
+
+  static Map<String, dynamic> toJson(Todo todo) {
+    return {
+      'title': todo.message,
+      'done': todo.check,
+    };
+  }
+
+  static Todo fromJson(Map<String, dynamic> json) {
+    return Todo(
+      message: json['title'],
+      check: json['done'],
+      id: json['id'],
+    );
+  }
 }
 
 class MyState extends ChangeNotifier {
-  String _filterValue = 'one';
-  List<TodoCard> _list = [];
-
-  //List<TodoCard> get list => _list;
-  List<TodoCard> get list {
-    return filtering(_list, _filterValue);
+  Future getList() async {
+    List<Todo> apiList = await Api.getTodos();
+    _completeTodoList = apiList;
+    notifyListeners();
   }
 
-  List<TodoCard> _filteredList;
+  String _filterValue = 'one';
 
-  List<TodoCard> filtering(List<TodoCard> _list, String _filterValue) {
+  List<Todo> _completeTodoList = [];
+
+  List<Todo> _filteredList;
+
+  List<Todo> get completeTodoList => filtering(_completeTodoList, _filterValue);
+
+  List<Todo> filtering(List<Todo> _completeTodoList, String _filterValue) {
     if (_filterValue == 'one') {
-      _filteredList = _list;
+      _filteredList = _completeTodoList;
       hinttext = 'Alla';
     }
     if (_filterValue == 'two') {
-      _filteredList = _list.where((card) => card.check == true).toList();
+      _filteredList =
+          _completeTodoList.where((todo) => todo.check == true).toList();
       hinttext = 'Slutförda';
     }
     if (_filterValue == 'three') {
-      _filteredList = _list.where((card) => card.check == false).toList();
+      _filteredList =
+          _completeTodoList.where((todo) => todo.check == false).toList();
       hinttext = 'Oavslutade';
     }
     return _filteredList;
   }
 
-  void addCard(TodoCard card) {
-    _filterValue = 'one';
-    _list.add(card);
+  useFilterFunction() {
     notifyListeners();
-  }
-
-  void removeCard(TodoCard card) {
-    _list.remove(card);
-    notifyListeners();
-  }
-
-  void setTake(TodoCard card, bool check) {
-    card.check = check;
-    notifyListeners();
+    return filtering;
   }
 
   void setFilterValue(newValue) {
     _filterValue = newValue;
   }
 
-  useFilter() {
+  void setCheckbox(Todo todo, bool check) async {
+    todo.check = check;
+    await Api.updateTodo(todo, todo.id);
     notifyListeners();
-    return filtering;
+  }
+
+  void addTodo(Todo todo) async {
+    await Api.addTodo(todo);
+    await getList();
+  }
+
+  void removeTodo(Todo todo) async {
+    await Api.removeTodo(todo.id);
+    await getList();
   }
 }

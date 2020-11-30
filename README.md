@@ -1,6 +1,6 @@
 # reminder_app
 
-Status: Uppdaterad för steg 2 och innehåller all funktionallitet som behövs.
+Status: Steg 3 är nu klar och appen är fullständig. :)
 
 Utvecklare: Andreas Åsén
 
